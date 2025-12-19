@@ -17,7 +17,7 @@
     @include('navigation-menu')
 
   <!-- Hero Banner -->
-  <section class="relative bg-cover bg-center h-[65vh]" style="background-image: url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1400&q=80');">
+  <section class="relative bg-cover bg-center h-[65vh]" style="background-image: url('/img/about.jpg');">
     <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white text-center px-6">
       <h1 class="text-5xl font-bold mb-3 tracking-wide">About Trivarro</h1>
       <p class="max-w-2xl text-lg leading-relaxed">Sri Lanka, Done Right - Local Experts. Real Adventures. No Tourist Traps.</p>
@@ -122,7 +122,7 @@
   </section>
 
   <!-- Footer Banner -->
-  <section class="relative bg-cover bg-center h-[40vh]" style="background-image: url('https://images.unsplash.com/photo-1571214124510-6b5df3b6b7b0?auto=format&fit=crop&w=1400&q=80');">
+  <section class="relative bg-cover bg-center h-[40vh]" style="background-image: url('/img/about2.jpg');">
     <div class="absolute inset-0 bg-black/60 flex flex-col justify-center items-center text-white text-center">
       <h2 class="text-4xl font-bold mb-2">Experience Sri Lanka with Heart</h2>
       <p class="text-lg">Travel with Trivarro — where every journey tells a story.</p>

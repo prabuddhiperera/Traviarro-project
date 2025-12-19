@@ -1461,37 +1461,50 @@
 
 <section class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-[#006994] mb-4">What Our Customers Say</h2>
-        
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center text-[#006994] mb-4">
+            What Our Customers Say
+        </h2>
+
         <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($reviews as $review)
-                @php
-                    // Generate a random initial for avatar
-                    $initial = collect(['A','B','C','D','E','F','G','H','I','J','K','L'])->random();
-                @endphp
 
                 <div class="bg-white p-6 rounded-3xl shadow-xl border border-gray-100 hover:shadow-2xl transition duration-500">
+                    
                     <div class="flex items-center mb-4">
+                        <!-- DP -->
                         <div class="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                            {{ $initial }}
+                            <i class="fas fa-user"></i>
                         </div>
+
                         <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">
+                                Recent Traveler
+                            </h3>
+
+                            <!-- Rating -->
                             <div class="flex mt-1">
-                                @for($i=0; $i < $review->rating; $i++)
+                                @for($i = 0; $i < $review->rating; $i++)
                                     <i class="fas fa-star text-yellow-400"></i>
                                 @endfor
-                                @for($i=$review->rating; $i<5; $i++)
+                                @for($i = $review->rating; $i < 5; $i++)
                                     <i class="far fa-star text-gray-300"></i>
                                 @endfor
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 text-sm leading-relaxed">{{ $review->comment }}</p>
+
+                    <!-- Comment -->
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        {{ $review->comment }}
+                    </p>
+
                 </div>
+
             @endforeach
         </div>
     </div>
 </section>
+
 
 
 <script>

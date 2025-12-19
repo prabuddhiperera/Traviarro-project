@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
+    // ===========================
+    // SHOW ALL CUSTOMERS
+    // ===========================
     public function index()
     {
-        $users = User::with(['admin','bookings','tripPlans','reviews'])->get();
-        return UserResource::collection($users);
+        $customers = User::orderBy('created_at', 'desc')->get();
+        return view('admin.customer.customer', compact('customers'));
     }
 
+    // ===========================
+    // STORE CUSTOMER
+    // ===========================
     public function store(Request $request)
     {
         $request->validate([
@@ -23,48 +28,58 @@ class UserController extends Controller
             'country' => 'nullable|string|max:100',
             'number_of_adults' => 'nullable|integer|min:0',
             'number_of_children' => 'nullable|integer|min:0',
-            'type' => 'nullable|in:user,admin',
+            'type' => 'nullable|string|max:50',
             'notes' => 'nullable|string',
         ]);
 
-        $user = User::create($request->only([
-            'full_name', 'email', 'phone', 'country', 
-            'number_of_adults', 'number_of_children', 'type', 'notes'
-        ]));
+        User::create($request->all());
 
-        return new UserResource($user);
+        return redirect()->route('customers.index')
+            ->with('success', 'Customer added successfully!');
     }
 
-    public function show(User $user)
+    // ===========================
+    // EDIT PAGE
+    // ===========================
+    public function edit($id)
     {
-        $user->load(['admin','bookings','tripPlans','reviews']);
-        return new UserResource($user);
+        $customer = User::findOrFail($id);
+        return view('admin.customer.customer_edit', compact('customer'));
     }
 
-    public function update(Request $request, User $user)
+    // ===========================
+    // UPDATE CUSTOMER
+    // ===========================
+    public function update(Request $request, $id)
     {
+        $customer = User::findOrFail($id);
+
         $request->validate([
-            'full_name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|email|unique:users,email,'.$user->id,
+            'full_name' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $customer->id,
             'phone' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:100',
             'number_of_adults' => 'nullable|integer|min:0',
             'number_of_children' => 'nullable|integer|min:0',
-            'type' => 'nullable|in:user,admin',
+            'type' => 'nullable|string|max:50',
             'notes' => 'nullable|string',
         ]);
 
-        $user->update($request->only([
-            'full_name', 'email', 'phone', 'country', 
-            'number_of_adults', 'number_of_children', 'type', 'notes'
-        ]));
+        $customer->update($request->all());
 
-        return new UserResource($user);
+        return redirect()->route('customers.index')
+            ->with('success', 'Customer updated successfully!');
     }
 
-    public function destroy(User $user)
+    // ===========================
+    // DELETE CUSTOMER
+    // ===========================
+    public function destroy($id)
     {
-        $user->delete();
-        return response()->json(['message' => 'User deleted successfully']);
+        $customer = User::findOrFail($id);
+        $customer->delete();
+
+        return redirect()->route('customers.index')
+            ->with('success', 'Customer deleted successfully!');
     }
 }

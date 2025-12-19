@@ -42,26 +42,33 @@
 
   <!-- Meet Our Team -->
   <section class="bg-blue-50 py-14 px-6 lg:px-24 text-center">
-    <h2 class="text-3xl font-bold text-blue-700 mb-4">Meet Our Team</h2>
-    <p class="text-gray-600 max-w-3xl mx-auto mb-8">Behind every journey is a team of passionate locals dedicated to making your experience unforgettable. From your first inquiry to your last goodbye, you’ll always have someone who truly cares.</p>
-    <div class="flex justify-center gap-8 flex-wrap">
-      <div class="bg-white shadow-lg rounded-2xl p-6 w-64">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-full w-24 h-24 mx-auto mb-3" alt="">
-        <h3 class="font-semibold text-lg">Ravindu Perera</h3>
-        <p class="text-sm text-gray-500">Founder & Travel Designer</p>
+      <h2 class="text-3xl font-bold text-blue-700 mb-4">Meet Our Team</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto mb-8">
+          Behind every journey is a team of passionate locals dedicated to making your experience unforgettable. 
+          From your first inquiry to your last goodbye, you’ll always have someone who truly cares.
+      </p>
+
+      <div class="flex justify-center gap-8 flex-wrap">
+          
+          <!-- TEAM CARD -->
+          <div class="bg-white shadow-lg rounded-2xl p-6 w-64">
+              
+              <!-- FACE ONLY -->
+              <div class="w-28 h-28 mx-auto mb-4 overflow-hidden rounded-full shadow-md">
+                  <img src="{{ asset('img/founder3.jpeg') }}"
+                      class="w-full h-full object-cover object-[center_20%]"
+                      alt="Founder">
+              </div>
+
+              <h3 class="font-semibold text-lg text-center">Oshan Tennakoon</h3>
+              <p class="text-sm text-gray-500 text-center">Founder</p>
+
+          </div>
+          <!-- END TEAM CARD -->
+
       </div>
-      <div class="bg-white shadow-lg rounded-2xl p-6 w-64">
-        <img src="https://randomuser.me/api/portraits/women/45.jpg" class="rounded-full w-24 h-24 mx-auto mb-3" alt="">
-        <h3 class="font-semibold text-lg">Nadeesha Silva</h3>
-        <p class="text-sm text-gray-500">Operations Manager</p>
-      </div>
-      <div class="bg-white shadow-lg rounded-2xl p-6 w-64">
-        <img src="https://randomuser.me/api/portraits/men/85.jpg" class="rounded-full w-24 h-24 mx-auto mb-3" alt="">
-        <h3 class="font-semibold text-lg">Kavindu Fernando</h3>
-        <p class="text-sm text-gray-500">Experience Curator</p>
-      </div>
-    </div>
   </section>
+
 
   <!-- Our Services -->
   <section class="py-16 px-6 lg:px-24 text-center">
@@ -73,7 +80,7 @@
       </div>
       <div class="bg-white shadow-md p-6 rounded-xl hover:shadow-xl transition">
         <h3 class="text-xl font-semibold text-blue-700 mb-2">🌊 Adventure Experiences</h3>
-        <p class="text-gray-600">Safaris, whale watching, snorkeling, surfing & more – thrill meets nature.</p>
+        <p class="text-gray-600">Safaris, whale watching, snorkeling, rafting & more – thrill meets nature.</p>
       </div>
       <div class="bg-white shadow-md p-6 rounded-xl hover:shadow-xl transition">
         <h3 class="text-xl font-semibold text-blue-700 mb-2">🕒 24/7 Guest Support</h3>

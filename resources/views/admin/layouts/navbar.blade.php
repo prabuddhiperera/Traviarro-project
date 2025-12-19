@@ -22,10 +22,10 @@
       <!-- Navigation Links -->
       <nav class="space-y-3">
         <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Dashboard</a>
-        <a href="{{ route('admin.bookings') }}" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Manage Bookings</a>
-        <a href="manage-customers.html" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Manage Customers</a>
-        <a href="manage-tours.html" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Manage Tours</a>
-        <a href="manage-services.html" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Manage Services</a>
+        <a href="{{ route('admin.bookings') }}" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Create Bookings</a>
+        <a href="{{ route('customers.index') }}"class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Create Customers</a>
+        <a href="{{ route('admin.tours.index') }}" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Create Tours</a>
+        <a href="{{ route('admin.services.index') }}"class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Create Services</a>
         <a href="{{ route('admin.charts') }}" class="block py-2 px-4 rounded-lg hover:bg-indigo-600 transition">Charts</a>
       </nav>
     </div>
@@ -45,7 +45,7 @@
   <script>
     function handleLogout() {
       alert('Logged out successfully!');
-      window.location.href = 'login.html';
+      window.location.href = "{{ route('admin.login') }}";
     }
   </script>
 

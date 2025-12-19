@@ -6,6 +6,8 @@
     <title>Admin Dashboard | Traviaro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3"></script>
+
 </head>
 
 <body class="bg-gray-50 min-h-screen font-sans flex">

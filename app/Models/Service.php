@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    protected $fillable = ['admin_id', 'name', 'description', 'price', 'type'];
+    protected $fillable = [
+        'title',
+        'slug',
+        'short_description',
+        'description',
+        'category_id',
+        'status',
+        'image',
+    ];
 
     public function admin()
     {

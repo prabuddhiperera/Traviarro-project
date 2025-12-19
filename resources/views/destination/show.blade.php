@@ -41,7 +41,6 @@
         </div>
 
         <!-- Places to Visit -->
-<!-- Places to Visit -->
 @if($destination->places->count())
 <h3 class="text-2xl font-bold text-[#0077b6] mb-6">Places to Visit</h3>
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -52,7 +51,9 @@
             @endif
             <div class="p-6">
                 <h4 class="text-xl font-semibold text-[#0077b6] mb-2">{{ $place->name }}</h4>
-                <p class="text-gray-600">Explore this amazing place and enjoy the experience.</p>
+                <p class="text-gray-600">
+                    {{ $place->description ?? 'Explore this amazing place and enjoy the experience.' }}
+                </p>
             </div>
         </div>
     @endforeach
@@ -70,12 +71,15 @@
             @endif
             <div class="p-6">
                 <h4 class="text-xl font-semibold text-[#0077b6] mb-2">{{ $activity->name }}</h4>
-                <p class="text-gray-600">Don't miss out on this activity while visiting.</p>
+                <p class="text-gray-600">
+                    {{ $activity->description ?? "Don't miss out on this activity while visiting." }}
+                </p>
             </div>
         </div>
     @endforeach
 </div>
 @endif
+
 
 
 

@@ -10,6 +10,8 @@
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3"></script>
+
 </head>
 <body class="bg-gray-50 text-gray-800">
   @include('navigation-menu')
@@ -29,7 +31,13 @@
   <section class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
     @foreach($tours as $tour)
       <div class="bg-white rounded-2xl shadow hover:shadow-lg transition p-4">
-        <img src="{{ $tour->image ?? 'img/tours/tours-fam.jpg' }}" alt="{{ $tour->name }}" class="w-full h-56 object-cover rounded-xl mb-4">
+        <div class="w-full h-56 overflow-hidden rounded-xl mb-4">
+          <img 
+            src="{{ $tour->image ?? 'img/tours/tours-fam.jpg' }}" 
+            alt="{{ $tour->name }}" 
+            class="w-full h-full object-cover"
+          >
+        </div>
         <h3 class="text-xl font-bold mb-2">{{ $tour->name }}</h3>
         <p class="text-gray-600 mb-4">{{ $tour->duration ?? '7 Days • Beaches, Culture, and Nature' }}</p>
         <a href="{{ route('tours.show', ['id' => $tour->id]) }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">

@@ -14,8 +14,8 @@
 
   <div class="flex-1 ml-64">
 
-    <!-- Header -->
-    <header class="bg-[#002D62] text-white px-10 py-5 shadow-md flex justify-between items-center sticky top-0 z-40">
+    <!-- Fixed Header -->
+    <header class="bg-[#002D62] text-white px-10 py-5 shadow-md flex justify-between items-center fixed top-0 left-64 right-0 z-50">
         <h1 class="text-2xl font-semibold tracking-wide">Booking Dashboard</h1>
         <div class="flex items-center space-x-3">
             <span class="font-medium">{{ $admin->name ?? 'Admin' }}</span>
@@ -23,9 +23,9 @@
         </div>
     </header>
 
-    <main class="p-6">
+    <main class="p-6 mt-[88px]">
 
-      {{-- Success --}}
+      {{-- Success/Error Messages --}}
       @if(session('success'))
         <div class="bg-green-100 text-green-800 p-3 rounded mb-4 shadow">
           {{ session('success') }}
@@ -49,9 +49,15 @@
 
         <div class="grid grid-cols-2 gap-4">
 
-          {{-- Customer Name --}}
+          {{-- Reservation ID --}}
           <div>
-            <label class="block mb-1 font-medium">Customer Name</label>
+            <label class="block mb-1 font-medium">Reservation ID</label>
+            <input type="text" name="reservation_id" value="{{ $nextReservationId ?? '' }}" class="w-full border px-3 py-2 rounded-lg" required>
+          </div>
+
+          {{-- Customer --}}
+          <div>
+            <label class="block mb-1 font-medium">Customer</label>
             <select id="userSelect" name="user_id" class="w-full border px-3 py-2 rounded-lg" required>
               <option value="">-- Select Customer --</option>
               @foreach($users as $user)
@@ -60,31 +66,31 @@
             </select>
           </div>
 
-          {{-- Phone (auto-fill) --}}
+          {{-- Phone --}}
           <div>
             <label class="block mb-1 font-medium">Phone</label>
-            <input type="text" id="phone" class="w-full border px-3 py-2 rounded-lg" readonly>
+            <input type="text" id="phone" name="phone" class="w-full border px-3 py-2 rounded-lg" readonly>
           </div>
 
-          {{-- Email (auto-fill) --}}
+          {{-- Email --}}
           <div>
             <label class="block mb-1 font-medium">Email</label>
-            <input type="email" id="email" class="w-full border px-3 py-2 rounded-lg" readonly>
+            <input type="email" id="email" name="email" class="w-full border px-3 py-2 rounded-lg" readonly>
           </div>
 
           {{-- Adults --}}
           <div>
-            <label class="block mb-1 font-medium">Number of Adults</label>
-            <input type="number" id="adults" class="w-full border px-3 py-2 rounded-lg" readonly>
+            <label class="block mb-1 font-medium">Adults</label>
+            <input type="number" id="adults" name="adults" class="w-full border px-3 py-2 rounded-lg" readonly>
           </div>
 
           {{-- Kids --}}
           <div>
-            <label class="block mb-1 font-medium">Number of Kids</label>
-            <input type="number" id="kids" class="w-full border px-3 py-2 rounded-lg" readonly>
+            <label class="block mb-1 font-medium">Kids</label>
+            <input type="number" id="kids" name="kids" class="w-full border px-3 py-2 rounded-lg" readonly>
           </div>
 
-          {{-- From & To (same row) --}}
+          {{-- From & To --}}
           <div class="col-span-2 flex gap-4">
             <div class="flex-1">
               <label class="block mb-1 font-medium">From</label>
@@ -95,7 +101,6 @@
                 @endforeach
               </select>
             </div>
-
             <div class="flex-1">
               <label class="block mb-1 font-medium">To</label>
               <select name="to_location" class="w-full border px-3 py-2 rounded-lg" required>
@@ -107,9 +112,19 @@
             </div>
           </div>
 
-          {{-- Trip Type --}}
+          {{-- Pickup & Dropoff --}}
           <div>
-            <label class="block mb-1 font-medium">Travel Type</label>
+            <label class="block mb-1 font-medium">Pickup Address</label>
+            <input type="text" name="pickup_location" class="w-full border px-3 py-2 rounded-lg">
+          </div>
+          <div>
+            <label class="block mb-1 font-medium">Dropoff Address</label>
+            <input type="text" name="dropoff_location" class="w-full border px-3 py-2 rounded-lg">
+          </div>
+
+          {{-- Travel Type --}}
+          <div>
+            <label class="block mb-1 font-medium">Trip Type</label>
             <select name="tour_id" class="w-full border px-3 py-2 rounded-lg" required>
               <option value="">-- Select Trip Type --</option>
               @foreach($services as $service)
@@ -130,7 +145,7 @@
             <input type="time" name="travel_time" class="w-full border px-3 py-2 rounded-lg" required>
           </div>
 
-          {{-- Vehicle Type --}}
+          {{-- Vehicle --}}
           <div>
             <label class="block mb-1 font-medium">Vehicle Type</label>
             <select name="vehicle_type" class="w-full border px-3 py-2 rounded-lg" required>
@@ -141,7 +156,24 @@
               <option>High Roof Van (7-9 Adults)</option>
               <option>Bus / Coach (15 / 25 / 45 Seater)</option>
               <option>Luxury (3-4 Adults)</option>
+              <option>Safari Jeep</option>
+              <option>Boat</option>
             </select>
+          </div>
+
+          {{-- Baby Seat --}}
+          <div>
+            <label class="block mb-1 font-medium">Baby Seat</label>
+            <select name="baby_seat" class="w-full border px-3 py-2 rounded-lg">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </div>
+
+          {{-- Flight Number --}}
+          <div>
+            <label class="block mb-1 font-medium">Flight Number (Optional)</label>
+            <input type="text" name="flight_number" class="w-full border px-3 py-2 rounded-lg">
           </div>
 
           {{-- Itinerary --}}
@@ -150,10 +182,40 @@
             <textarea name="itinerary" class="w-full border px-3 py-2 rounded-lg"></textarea>
           </div>
 
-          {{-- Price --}}
+          {{-- Price & Profit --}}
           <div>
-            <label class="block mb-1 font-medium">Price</label>
-            <input type="number" step="0.01" name="price" class="w-full border px-3 py-2 rounded-lg" required>
+            <label class="block mb-1 font-medium">Price (LKR)</label>
+            <input type="number" step="0.01" name="total_price" id="price" class="w-full border px-3 py-2 rounded-lg" required>
+          </div>
+          <div>
+            <label class="block mb-1 font-medium">Profit (LKR)</label>
+            <input type="number" step="0.01" name="profit" id="profit" class="w-full border px-3 py-2 rounded-lg" readonly>
+          </div>
+
+          {{-- Payment & Reservation Status --}}
+          <div>
+            <label class="block mb-1 font-medium">Payment Status</label>
+            <select name="payment_status" class="w-full border px-3 py-2 rounded-lg">
+              <option value="Unpaid">Unpaid</option>
+              <option value="Half Paid">Half Paid</option>
+              <option value="Fully Paid">Fully Paid</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1 font-medium">Payment Method</label>
+            <select name="payment_method" class="w-full border px-3 py-2 rounded-lg">
+              <option value="Cash">Cash</option>
+              <option value="Online">Online</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1 font-medium">Reservation Status</label>
+            <select name="reservation_status" class="w-full border px-3 py-2 rounded-lg">
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
           </div>
 
         </div>
@@ -161,7 +223,7 @@
         <button type="submit" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Create Reservation</button>
       </form>
 
-      {{-- TABS ADDED HERE --}}
+      {{-- Tabs --}}
       <div class="bg-white p-4 rounded-xl shadow mb-4">
         <div class="flex space-x-4 border-b pb-2">
             <button class="tab-btn active-tab px-4 py-2 font-medium" data-tab="all">All</button>
@@ -171,109 +233,99 @@
         </div>
       </div>
 
-      {{-- Existing Bookings Table --}}
+      {{-- Existing Bookings --}}
       <div class="bg-white shadow rounded-xl p-4 overflow-x-auto">
-        <h2 class="text-xl font-semibold mb-4">Existing Bookings</h2>
+          <h2 class="text-xl font-semibold mb-4">Existing Bookings</h2>
 
-        <table class="min-w-full border text-sm">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="border px-4 py-2">#</th>
-              <th class="border px-4 py-2">Customer</th>
-              <th class="border px-4 py-2">Phone</th>
-              <th class="border px-4 py-2">Trip Type</th>
-              <th class="border px-4 py-2">From - To</th>
-              <th class="border px-4 py-2">Travel Date</th>
-              <th class="border px-4 py-2">Travel Time</th>
-              <th class="border px-4 py-2">Vehicle</th>
-              <th class="border px-4 py-2">Itinerary</th>
-              <th class="border px-4 py-2">Price</th>
-              <th class="border px-4 py-2">Action</th>
-            </tr>
-          </thead>
+          <table class="min-w-full bg-white border">
+              <thead>
+                  <tr class="bg-gray-100">
+                      <th class="border px-4 py-2">ID</th>
+                      <th class="border px-4 py-2">Reservation ID</th>
+                      <th class="border px-4 py-2">Customer</th>
+                      <th class="border px-4 py-2">Phone</th>
+                      <th class="border px-4 py-2">Trip Type</th>
+                      <th class="border px-4 py-2">From - To</th>
+                      <th class="border px-4 py-2">Travel Date</th>
+                      <th class="border px-4 py-2">Travel Time</th>
+                      <th class="border px-4 py-2">Vehicle</th>
+                      <th class="border px-4 py-2">Price</th>
+                      <th class="border px-4 py-2">Reservation Status</th>
+                      <th class="border px-4 py-2">Payment Status</th>
+                      <th class="border px-4 py-2">Action</th>
+                  </tr>
+              </thead>
 
-          <tbody id="bookingTableBody">
-            @forelse($bookings as $booking)
-              <tr class="hover:bg-gray-50 booking-row"
-                  data-date="{{ $booking->travel_date }}">
-                <td class="border px-4 py-2">{{ $loop->iteration + ($bookings->currentPage()-1) * $bookings->perPage() }}</td>
-                <td class="border px-4 py-2">{{ $booking->user->full_name ?? $booking->user->name ?? 'N/A' }}</td>
-                <td class="border px-4 py-2">{{ $booking->user->phone ?? 'N/A' }}</td>
-                <td class="border px-4 py-2">{{ $booking->type }}</td>
-                <td class="border px-4 py-2">{{ $booking->from_location }} - {{ $booking->to_location }}</td>
-                <td class="border px-4 py-2">{{ $booking->travel_date }}</td>
-                <td class="border px-4 py-2">{{ $booking->travel_time }}</td>
-                <td class="border px-4 py-2">{{ $booking->vehicle_type }}</td>
-                <td class="border px-4 py-2">{{ $booking->itinerary }}</td>
-                <td class="border px-4 py-2">${{ $booking->total_price }}</td>
-                <td class="border px-4 py-2 text-center flex justify-center gap-2">
-                  <a href="{{ route('admin.bookings.edit', $booking->id) }}"
-                    class="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
-                    Edit
-                  </a>
-                  <form method="POST" action="{{ route('admin.bookings.destroy', $booking->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
-                  </form>
-                </td>
-              </tr>
-            @empty
-              <tr>
-                <td colspan="11" class="text-center py-4">No bookings found.</td>
-              </tr>
-            @endforelse
-          </tbody>
-        </table>
+              <tbody>
+                  @php $counter = 1; @endphp
+                  @foreach($bookings->sortBy('id') as $booking)
+                  <tr class="border-b booking-row" data-date="{{ $booking->travel_date }}">
+                      <td class="border px-4 py-2">{{ $counter++ }}</td>
+                      <td class="border px-4 py-2">{{ $booking->reservation_id }}</td>
+                      <td class="border px-4 py-2">{{ $booking->customer_name }}</td>
+                      <td class="border px-4 py-2">{{ $booking->phone }}</td>
+                      <td class="border px-4 py-2">{{ $booking->type }}</td>
+                      <td class="border px-4 py-2">{{ $booking->from_location }} - {{ $booking->to_location }}</td>
+                      <td class="border px-4 py-2">{{ $booking->travel_date }}</td>
+                      <td class="border px-4 py-2">{{ $booking->travel_time }}</td>
+                      <td class="border px-4 py-2">{{ $booking->vehicle_type }}</td>
+                      <td class="border px-4 py-2">LKR {{ number_format($booking->total_price) }}</td>
+                      <td class="border px-4 py-2">{{ $booking->reservation_status }}</td>
+                      <td class="border px-4 py-2">{{ $booking->payment_status }}</td>
+                      <td class="border px-4 py-2 flex flex-col gap-2">
+                        <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-center w-full">Edit</a>
+                        <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" class="w-full" onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 w-full text-center">Delete</button>
+                        </form>
+                      </td>
+                  </tr>
+                  @endforeach
+              </tbody>
+          </table>
 
-        <div class="mt-4">
-          {{ $bookings->links() }}
-        </div>
+          <div class="mt-4">
+              {{ $bookings->links() }}
+          </div>
       </div>
 
     </main>
   </div>
 
   <script>
-    // Auto-fill user details
     const users = @json($users);
 
+    // Auto-fill user details
     $('#userSelect').change(function() {
       const userId = $(this).val();
       const user = users.find(u => u.id == userId);
-
       $('#phone').val(user?.phone || '');
       $('#email').val(user?.email || '');
-      $('#adults').val(user?.number_of_adults || '');
-      $('#kids').val(user?.number_of_kids || '');
+      $('#adults').val(user?.number_of_adults || 0);
+      $('#kids').val(user?.number_of_children || 0);
     });
 
-    // Tabs filtering
+    // Profit calculation
+    $('#price').on('input', function() {
+      const price = parseFloat($('#price').val()) || 0;
+      $('#profit').val((price * 0.2).toFixed(2));
+    });
+
+    // Tabs
     $('.tab-btn').on('click', function () {
         $('.tab-btn').removeClass('active-tab');
         $(this).addClass('active-tab');
-
         const tab = $(this).data('tab');
         const today = new Date().toISOString().split('T')[0];
-
         $('.booking-row').each(function () {
             const rowDate = $(this).data('date');
-
-            if (tab === "all") {
-                $(this).show();
-            } 
-            else if (tab === "upcoming") {
-                (rowDate > today) ? $(this).show() : $(this).hide();
-            } 
-            else if (tab === "today") {
-                (rowDate === today) ? $(this).show() : $(this).hide();
-            } 
-            else if (tab === "previous") {
-                (rowDate < today) ? $(this).show() : $(this).hide();
-            }
+            if (tab === "all") $(this).show();
+            else if (tab === "upcoming") rowDate > today ? $(this).show() : $(this).hide();
+            else if (tab === "today") rowDate === today ? $(this).show() : $(this).hide();
+            else if (tab === "previous") rowDate < today ? $(this).show() : $(this).hide();
         });
     });
-
     $('.tab-btn[data-tab="all"]').click();
   </script>
 

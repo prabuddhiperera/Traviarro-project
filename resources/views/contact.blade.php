@@ -26,7 +26,20 @@
   </div>
 </section>
 
-    
+@if(session('success'))
+<div id="successAlert" class="fixed top-5 right-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg z-50 transition-opacity duration-500">
+    {{ session('success') }}
+</div>
+
+<script>
+    // Hide after 5 seconds
+    setTimeout(() => {
+        const alert = document.getElementById('successAlert');
+        alert.style.opacity = '0';
+        setTimeout(() => alert.remove(), 500); // remove after fade out
+    }, 5000);
+</script>
+@endif
 
   <section class="py-20">
     <!-- Contact Section -->
@@ -35,21 +48,22 @@
       <!-- Contact Form -->
       <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10 hover:shadow-2xl transition-shadow duration-300">
         <h3 class="text-2xl font-semibold text-[#006994] mb-6 text-center">Send Us a Message</h3>
-        <form action="#" method="POST" class="space-y-5">
+        <form action="{{ route('reviews.store') }}" method="POST" class="space-y-5">
+          @csrf
           <div>
             <label class="block text-gray-700 mb-2 font-medium">Full Name</label>
-            <input type="text" placeholder="Enter your name"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006994] focus:outline-none">
+            <input type="text" name="name" placeholder="Enter your name"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006994] focus:outline-none" required>
           </div>
           <div>
             <label class="block text-gray-700 mb-2 font-medium">Email</label>
-            <input type="email" placeholder="Enter your email"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006994] focus:outline-none">
+            <input type="email" name="email" placeholder="Enter your email"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006994] focus:outline-none" required>
           </div>
           <div>
             <label class="block text-gray-700 mb-2 font-medium">Message</label>
-            <textarea rows="5" placeholder="Write your message here..."
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006994] focus:outline-none"></textarea>
+            <textarea rows="5" name="comment" placeholder="Write your message here..."
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006994] focus:outline-none" required></textarea>
           </div>
           <button type="submit"
             class="w-full bg-[#006994] hover:bg-[#00557a] text-white py-3 rounded-lg text-lg font-semibold transition-all duration-300">

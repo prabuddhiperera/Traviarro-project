@@ -9,21 +9,63 @@ class TourSeeder extends Seeder
 {
     public function run()
     {
-        // Temporarily disable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Delete existing tours safely (no truncate)
+        DB::table('tours')->delete();
 
+        // Insert tours without specifying `id` to avoid duplicates
         DB::table('tours')->insert([
-            'id' => 1,
-            'admin_id' => 0, // dummy value since we are not adding an admin yet
-            'name' => 'Family Getaway Tour',
-            'destination_id' => 1, // adjust as needed
-            'price' => 2500,
-            'description' => '15 Days & 14 Nights exploring Sri Lanka’s best destinations: Negombo, Sigiriya, Kandy, Nuwara Eliya, Ella, Yala, Mirissa, Ahangama, Bentota, Colombo.',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            [
+                'admin_id' => 1,
+                'name' => '7 Days / 6 Nights Sri Lanka Highlights',
+                'destination_id' => 1,
+                'price' => 800,
+                'description' => 'Explore Sri Lanka highlights – culture, mountains, beaches.',
+                'image' => 'tours/7days.jpg',
+                'pickup_location' => 'Airport',
+                'dropoff_location' => 'Airport',
+                'travel_date' => null,
+                'travel_time' => null,
+                'vehicle_type' => 'Car',
+                'flight_number' => null,
+                'duration' => '7 Days',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
 
-        // Re-enable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            [
+                'admin_id' => 1,
+                'name' => '10 Days / 9 Nights Sri Lanka Discovery',
+                'destination_id' => 2,
+                'price' => 1100,
+                'description' => 'Sri Lanka Discovery Tour – beaches, culture, wildlife, and adventure.',
+                'image' => 'tours/10days.jpg',
+                'pickup_location' => 'Airport',
+                'dropoff_location' => 'Airport',
+                'travel_date' => null,
+                'travel_time' => null,
+                'vehicle_type' => 'Car',
+                'flight_number' => null,
+                'duration' => '10 Days',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'admin_id' => 1,
+                'name' => '15 Days / 14 Nights Family Getaway',
+                'destination_id' => 3,
+                'price' => 1500,
+                'description' => 'Complete Sri Lanka family adventure covering all highlights.',
+                'image' => 'tours/15days.jpg',
+                'pickup_location' => 'Airport',
+                'dropoff_location' => 'Airport',
+                'travel_date' => null,
+                'travel_time' => null,
+                'vehicle_type' => 'Car',
+                'flight_number' => null,
+                'duration' => '15 Days',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
